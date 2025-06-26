@@ -1,0 +1,281 @@
+/**
+ * @file Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.
+ * @author Kyrylo Baibula <kyrylo.baybula@distributedlab.com>
+ * @license MIT
+ */
+
+/// <reference types="tree-sitter-cli/dsl" />
+// @ts-check
+
+module.exports = grammar({
+  name: "simplicity",
+
+  extras: ($) => [/\s/, $.comment],
+
+  rules: {
+    program: ($) => repeat($.item),
+
+    comment: ($) =>
+      token(
+        choice(seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"), seq("//", /[^\n]*/)),
+      ),
+
+    item: ($) => choice($.type_alias, $.function, $.module),
+
+    function: ($) =>
+      seq(
+        "fn",
+        field("name", $.function_name),
+        $.function_params,
+        optional($.function_return),
+        $.block_expression,
+      ),
+
+    function_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    function_params: ($) =>
+      seq(
+        "(",
+        optional(seq($.typed_identifier, repeat(seq(",", $.typed_identifier)))),
+        ")",
+      ),
+
+    typed_identifier: ($) => seq($.identifier, ":", $.ty),
+
+    function_return: ($) => seq("->", $.ty),
+
+    block_expression: ($) =>
+      seq("{", repeat(seq($.statement, ";")), optional($.expression), "}"),
+
+    statement: ($) => choice($.assignment, $.expression),
+
+    assignment: ($) => seq("let", $.pattern, ":", $.ty, "=", $.expression),
+
+    pattern: ($) =>
+      choice(
+        $.ignore_pattern,
+        $.tuple_pattern,
+        $.array_pattern,
+        $.variable_pattern,
+      ),
+    variable_pattern: ($) => $.identifier,
+    ignore_pattern: ($) => "_",
+    tuple_pattern: ($) =>
+      seq(
+        "(",
+        optional(
+          seq(
+            seq($.pattern, ","),
+            repeat(seq($.pattern, ",")),
+            optional($.pattern),
+          ),
+        ),
+        ")",
+      ),
+    array_pattern: ($) =>
+      seq(
+        "[",
+        optional(seq($.pattern, repeat(seq(",", $.pattern)), optional(","))),
+        "]",
+      ),
+
+    expression: ($) => choice($.block_expression, $.single_expression),
+
+    single_expression: ($) =>
+      choice(
+        $.left_expr,
+        $.right_expr,
+        $.none_expr,
+        $.some_expr,
+        $.false_expr,
+        $.true_expr,
+        $.call_expr,
+        $.match_expr,
+        $.tuple_expr,
+        $.array_expr,
+        $.list_expr,
+        $.bin_literal,
+        $.hex_literal,
+        $.dec_literal,
+        $.witness_expr,
+        $.param_expr,
+        $.variable_expr,
+        seq("(", $.expression, ")"),
+      ),
+
+    left_expr: ($) => seq("Left(", $.expression, ")"),
+    right_expr: ($) => seq("Right(", $.expression, ")"),
+    none_expr: ($) => "None",
+    some_expr: ($) => seq("Some(", $.expression, ")"),
+    false_expr: ($) => "false",
+    true_expr: ($) => "true",
+
+    call_expr: ($) => seq($.call_name, $.call_args),
+
+    call_name: ($) =>
+      choice(
+        $.jet,
+        "unwrap_left",
+        "unwrap_right",
+        "is_none",
+        "unwrap",
+        "assert!",
+        "panic!",
+        $.type_cast,
+        "dbg!",
+        $.fold,
+        $.for_while,
+        $.function_name,
+      ),
+
+    call_args: ($) =>
+      seq(
+        "(",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        ")",
+      ),
+
+    match_expr: ($) =>
+      seq("match", $.expression, "{", repeat1($.match_arm), "}"),
+
+    match_arm: ($) =>
+      seq(
+        $.match_pattern,
+        "=>",
+        choice(
+          seq($.single_expression, ","),
+          seq($.block_expression, optional(",")),
+        ),
+      ),
+
+    match_pattern: ($) =>
+      choice(
+        $.left_pattern,
+        $.right_pattern,
+        "None",
+        $.some_pattern,
+        "false",
+        "true",
+      ),
+
+    left_pattern: ($) => seq("Left(", $.identifier, ":", $.ty, ")"),
+    right_pattern: ($) => seq("Right(", $.identifier, ":", $.ty, ")"),
+    some_pattern: ($) => seq("Some(", $.identifier, ":", $.ty, ")"),
+
+    tuple_expr: ($) =>
+      seq(
+        "(",
+        optional(
+          seq(
+            seq($.expression, ","),
+            repeat(seq($.expression, ",")),
+            optional($.expression),
+          ),
+        ),
+        ")",
+      ),
+
+    array_expr: ($) =>
+      seq(
+        "[",
+        optional(
+          seq($.expression, repeat(seq(",", $.expression)), optional(",")),
+        ),
+        "]",
+      ),
+
+    list_expr: ($) =>
+      seq(
+        "list![",
+        optional(
+          seq($.expression, repeat(seq(",", $.expression)), optional(",")),
+        ),
+        "]",
+      ),
+
+    type_alias: ($) => seq("type", $.alias_name, "=", $.ty, ";"),
+
+    ty: ($) =>
+      choice(
+        $.alias_name,
+        $.builtin_alias,
+        $.sum_type,
+        $.option_type,
+        "bool",
+        $.unsigned_type,
+        $.tuple_type,
+        $.array_type,
+        $.list_type,
+      ),
+
+    alias_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    builtin_alias: ($) =>
+      choice(
+        "Ctx8",
+        "Pubkey",
+        "Message64",
+        "Message",
+        "Signature",
+        "Scalar",
+        "Fe",
+        "Gej",
+        "Ge",
+        "Point",
+        "Height",
+        "Time",
+        "Distance",
+        "Duration",
+        "Lock",
+        "Outpoint",
+        "Confidential1",
+        "ExplicitAsset",
+        "Asset1",
+        "ExplicitAmount",
+        "Amount1",
+        "ExplicitNonce",
+        "Nonce",
+        "TokenAmount1",
+      ),
+
+    sum_type: ($) => seq("Either<", $.ty, ",", $.ty, ">"),
+    option_type: ($) => seq("Option<", $.ty, ">"),
+    unsigned_type: ($) =>
+      choice("u128", "u256", "u16", "u32", "u64", "u1", "u2", "u4", "u8"),
+    tuple_type: ($) =>
+      seq(
+        "(",
+        optional(seq(seq($.ty, ","), repeat(seq($.ty, ",")))),
+        optional($.ty),
+        ")",
+      ),
+
+    array_type: ($) => seq("[", $.ty, ";", /\d+/, "]"),
+    list_type: ($) => seq("List<", $.ty, ",", /\d+/, ">"),
+
+    module: ($) =>
+      seq(
+        "mod",
+        choice("witness", "param"),
+        "{",
+        repeat(seq($.module_assign, ";")),
+        "}",
+      ),
+
+    module_assign: ($) =>
+      seq("const", $.witness_name, ":", $.ty, "=", $.expression),
+
+    jet: ($) => /jet::[a-zA-Z0-9_]+/,
+    witness_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+    identifier: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+    bin_literal: ($) => /0b[01_]+/,
+    hex_literal: ($) => /0x[0-9a-fA-F_]+/,
+    dec_literal: ($) => /[0-9_]+/,
+    witness_expr: ($) => /witness::[a-zA-Z][a-zA-Z0-9_]*/,
+    param_expr: ($) => /param::[a-zA-Z][a-zA-Z0-9_]*/,
+    type_cast: ($) => seq("<", $.ty, ">::into"),
+    fold: ($) => seq("fold::<", $.function_name, ",", /\d+/, ">"),
+    for_while: ($) => seq("for_while::<", $.function_name, ">"),
+    variable_expr: ($) => $.identifier,
+  },
+});
