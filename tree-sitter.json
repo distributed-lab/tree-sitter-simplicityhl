@@ -1,0 +1,37 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "simfony",
+      "camelcase": "Simfony",
+      "title": "Simfony",
+      "scope": "source.simfony",
+      "file-types": [".simf"],
+      "injection-regex": "^simfony$",
+      "class-name": "TreeSitterSimfony"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.",
+    "authors": [
+      {
+        "name": "Kyrylo Baibula",
+        "email": "kyrylo.baybula@distributed-lab.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/distributed-lab/tree-sitter-simfony.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
