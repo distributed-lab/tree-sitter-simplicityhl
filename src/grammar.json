@@ -654,6 +654,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "array_fold"
+        },
+        {
+          "type": "SYMBOL",
           "name": "for_while"
         },
         {
@@ -1034,7 +1038,11 @@
       "members": [
         {
           "type": "STRING",
-          "value": "list!["
+          "value": "list!"
+        },
+        {
+          "type": "STRING",
+          "value": "["
         },
         {
           "type": "CHOICE",
@@ -1541,22 +1549,26 @@
         }
       ]
     },
-    "jet": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "jet"
-        },
-        {
-          "type": "STRING",
-          "value": "::"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[a-zA-Z0-9_]+"
-        }
-      ]
+    "jet_keyword": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "jet"
+      }
+    },
+    "witness_keyword": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "witness"
+      }
+    },
+    "param_keyword": {
+      "type": "TOKEN",
+      "content": {
+        "type": "STRING",
+        "value": "param"
+      }
     },
     "witness_name": {
       "type": "PATTERN",
@@ -1566,25 +1578,56 @@
       "type": "PATTERN",
       "value": "[a-zA-Z][a-zA-Z0-9_]*"
     },
-    "bin_literal": {
-      "type": "PATTERN",
-      "value": "0b[01_]+"
-    },
-    "hex_literal": {
-      "type": "PATTERN",
-      "value": "0x[0-9a-fA-F_]+"
-    },
-    "dec_literal": {
-      "type": "PATTERN",
-      "value": "[0-9_]+"
+    "jet": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "jet_keyword"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function_name"
+        }
+      ]
     },
     "witness_expr": {
-      "type": "PATTERN",
-      "value": "witness::[a-zA-Z][a-zA-Z0-9_]*"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "witness_keyword"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "witness_name"
+        }
+      ]
     },
     "param_expr": {
-      "type": "PATTERN",
-      "value": "param::[a-zA-Z][a-zA-Z0-9_]*"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "param_keyword"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "witness_name"
+        }
+      ]
     },
     "type_cast": {
       "type": "SEQ",
@@ -1644,6 +1687,39 @@
         }
       ]
     },
+    "array_fold": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "array_fold"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function_name"
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\d+"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
     "for_while": {
       "type": "SEQ",
       "members": [
@@ -1672,6 +1748,18 @@
     "variable_expr": {
       "type": "SYMBOL",
       "name": "identifier"
+    },
+    "bin_literal": {
+      "type": "PATTERN",
+      "value": "0b[01_]+"
+    },
+    "hex_literal": {
+      "type": "PATTERN",
+      "value": "0x[0-9a-fA-F_]+"
+    },
+    "dec_literal": {
+      "type": "PATTERN",
+      "value": "[0-9_]+"
     }
   },
   "extras": [
