@@ -8,7 +8,7 @@
 // @ts-check
 
 module.exports = grammar({
-  name: "simfony",
+  name: "simplicityhl",
   extras: ($) => [/\s/, $.comment],
 
   rules: {
