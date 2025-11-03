@@ -47,6 +47,7 @@
   "array_fold"
   "for_while"
   "list!"
+  "into"
 ] @function.builtin
 
 (function_name) @function
