@@ -8,7 +8,7 @@
 // @ts-check
 
 module.exports = grammar({
-  name: "simfony",
+  name: "simplicityhl",
   extras: ($) => [/\s/, $.comment],
 
   rules: {
@@ -123,6 +123,7 @@ module.exports = grammar({
         $.type_cast,
         "dbg!",
         $.fold,
+        $.array_fold,
         $.for_while,
         $.function_name,
       ),
@@ -185,7 +186,8 @@ module.exports = grammar({
 
     list_expr: ($) =>
       seq(
-        "list![",
+        "list!",
+        "[",
         optional(
           seq($.expression, repeat(seq(",", $.expression)), optional(",")),
         ),
@@ -264,17 +266,25 @@ module.exports = grammar({
     module_assign: ($) =>
       seq("const", $.witness_name, ":", $.ty, "=", $.expression),
 
-    jet: ($) => seq("jet", "::", /[a-zA-Z0-9_]+/),
+    jet_keyword: ($) => token("jet"),
+    witness_keyword: ($) => token("witness"),
+    param_keyword: ($) => token("param"),
+
     witness_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
     identifier: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    jet: ($) => seq($.jet_keyword, "::", $.function_name),
+    witness_expr: ($) => seq($.witness_keyword, "::", $.witness_name),
+    param_expr: ($) => seq($.param_keyword, "::", $.witness_name),
+
+    type_cast: ($) => seq("<", $.ty, ">", "::", "into"),
+    fold: ($) => seq("fold", "::", "<", $.function_name, ",", /\d+/, ">"),
+    array_fold: ($) => seq("array_fold", "::", "<", $.function_name, ",", /\d+/, ">"),
+    for_while: ($) => seq("for_while", "::", "<", $.function_name, ">"),
+    variable_expr: ($) => $.identifier,
+
     bin_literal: ($) => /0b[01_]+/,
     hex_literal: ($) => /0x[0-9a-fA-F_]+/,
     dec_literal: ($) => /[0-9_]+/,
-    witness_expr: ($) => /witness::[a-zA-Z][a-zA-Z0-9_]*/,
-    param_expr: ($) => /param::[a-zA-Z][a-zA-Z0-9_]*/,
-    type_cast: ($) => seq("<", $.ty, ">", "::", "into"),
-    fold: ($) => seq("fold", "::", "<", $.function_name, ",", /\d+/, ">"),
-    for_while: ($) => seq("for_while", "::", "<", $.function_name, ">"),
-    variable_expr: ($) => $.identifier,
   },
 });

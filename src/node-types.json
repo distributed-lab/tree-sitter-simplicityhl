@@ -20,6 +20,21 @@
     }
   },
   {
+    "type": "array_fold",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "function_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "array_pattern",
     "named": true,
     "fields": {},
@@ -138,6 +153,10 @@
       "multiple": false,
       "required": false,
       "types": [
+        {
+          "type": "array_fold",
+          "named": true
+        },
         {
           "type": "fold",
           "named": true
@@ -315,7 +334,21 @@
   {
     "type": "jet",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "jet_keyword",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "left_expr",
@@ -503,6 +536,30 @@
         }
       ]
     }
+  },
+  {
+    "type": "param_expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "param_keyword",
+          "named": true
+        },
+        {
+          "type": "witness_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "param_keyword",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "pattern",
@@ -914,6 +971,30 @@
     }
   },
   {
+    "type": "witness_expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "witness_keyword",
+          "named": true
+        },
+        {
+          "type": "witness_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "witness_keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "witness_name",
     "named": true,
     "fields": {}
@@ -1095,6 +1176,10 @@
     "named": false
   },
   {
+    "type": "array_fold",
+    "named": false
+  },
+  {
     "type": "assert!",
     "named": false
   },
@@ -1156,15 +1241,15 @@
     "named": false
   },
   {
-    "type": "jet",
-    "named": false
+    "type": "jet_keyword",
+    "named": true
   },
   {
     "type": "let",
     "named": false
   },
   {
-    "type": "list![",
+    "type": "list!",
     "named": false
   },
   {
@@ -1182,10 +1267,6 @@
   {
     "type": "param",
     "named": false
-  },
-  {
-    "type": "param_expr",
-    "named": true
   },
   {
     "type": "true",
@@ -1246,10 +1327,6 @@
   {
     "type": "witness",
     "named": false
-  },
-  {
-    "type": "witness_expr",
-    "named": true
   },
   {
     "type": "{",

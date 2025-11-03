@@ -2,17 +2,17 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "simfony",
-      "camelcase": "Simfony",
-      "title": "Simfony",
-      "scope": "source.simfony",
+      "name": "simplicityhl",
+      "camelcase": "SimplicityHL",
+      "title": "SimplicityHL",
+      "scope": "source.simplicityhl",
       "file-types": [".simf"],
       "injection-regex": "^simfony$",
       "class-name": "TreeSitterSimfony"
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "description": "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.",
     "authors": [
