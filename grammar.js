@@ -114,8 +114,8 @@ module.exports = grammar({
     call_name: ($) =>
       choice(
         $.jet,
-        "unwrap_left",
-        "unwrap_right",
+        $.unwrap_left,
+        $.unwrap_right,
         "is_none",
         "unwrap",
         "assert!",
@@ -158,9 +158,9 @@ module.exports = grammar({
         "true",
       ),
 
-    left_pattern: ($) => seq("Left", "(", $.identifier, ":", $.ty, ")"),
-    right_pattern: ($) => seq("Right", "(", $.identifier, ":", $.ty, ")"),
-    some_pattern: ($) => seq("Some", "(", $.identifier, ":", $.ty, ")"),
+    left_pattern: ($) => seq("Left", "(", $.typed_identifier, ")"),
+    right_pattern: ($) => seq("Right", "(", $.typed_identifier, ")"),
+    some_pattern: ($) => seq("Some", "(", $.typed_identifier, ")"),
 
     tuple_expr: ($) =>
       seq(
@@ -202,7 +202,6 @@ module.exports = grammar({
         $.builtin_alias,
         $.sum_type,
         $.option_type,
-        "bool",
         $.unsigned_type,
         $.tuple_type,
         $.array_type,
@@ -237,6 +236,7 @@ module.exports = grammar({
         "ExplicitNonce",
         "Nonce",
         "TokenAmount1",
+        "bool"
       ),
 
     sum_type: ($) => seq("Either", "<", $.ty, ",", $.ty, ">"),
@@ -266,21 +266,23 @@ module.exports = grammar({
     module_assign: ($) =>
       seq("const", $.witness_name, ":", $.ty, "=", $.expression),
 
-    jet_keyword: ($) => token("jet"),
-    witness_keyword: ($) => token("witness"),
-    param_keyword: ($) => token("param"),
 
     witness_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
     identifier: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
 
-    jet: ($) => seq($.jet_keyword, "::", $.function_name),
-    witness_expr: ($) => seq($.witness_keyword, "::", $.witness_name),
-    param_expr: ($) => seq($.param_keyword, "::", $.witness_name),
+    jet: ($) => seq("jet", "::", $.function_name),
+    witness_expr: ($) => seq("witness", "::", $.witness_name),
+    param_expr: ($) => seq("param", "::", $.witness_name),
 
     type_cast: ($) => seq("<", $.ty, ">", "::", "into"),
     fold: ($) => seq("fold", "::", "<", $.function_name, ",", /\d+/, ">"),
     array_fold: ($) => seq("array_fold", "::", "<", $.function_name, ",", /\d+/, ">"),
     for_while: ($) => seq("for_while", "::", "<", $.function_name, ">"),
+
+
+    unwrap_left: ($) => seq("unwrap_left", "::", "<", $.ty, ">"),
+    unwrap_right: ($) => seq("unwrap_right", "::", "<", $.ty, ">"),
+
     variable_expr: ($) => $.identifier,
 
     bin_literal: ($) => /0b[01_]+/,

@@ -617,12 +617,12 @@
           "name": "jet"
         },
         {
-          "type": "STRING",
-          "value": "unwrap_left"
+          "type": "SYMBOL",
+          "name": "unwrap_left"
         },
         {
-          "type": "STRING",
-          "value": "unwrap_right"
+          "type": "SYMBOL",
+          "name": "unwrap_right"
         },
         {
           "type": "STRING",
@@ -834,15 +834,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -863,15 +855,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -892,15 +876,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -1140,10 +1116,6 @@
           "name": "option_type"
         },
         {
-          "type": "STRING",
-          "value": "bool"
-        },
-        {
           "type": "SYMBOL",
           "name": "unsigned_type"
         },
@@ -1263,6 +1235,10 @@
         {
           "type": "STRING",
           "value": "TokenAmount1"
+        },
+        {
+          "type": "STRING",
+          "value": "bool"
         }
       ]
     },
@@ -1549,27 +1525,6 @@
         }
       ]
     },
-    "jet_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "jet"
-      }
-    },
-    "witness_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "witness"
-      }
-    },
-    "param_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "param"
-      }
-    },
     "witness_name": {
       "type": "PATTERN",
       "value": "[a-zA-Z][a-zA-Z0-9_]*"
@@ -1582,8 +1537,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "jet_keyword"
+          "type": "STRING",
+          "value": "jet"
         },
         {
           "type": "STRING",
@@ -1599,8 +1554,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "witness_keyword"
+          "type": "STRING",
+          "value": "witness"
         },
         {
           "type": "STRING",
@@ -1616,8 +1571,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "param_keyword"
+          "type": "STRING",
+          "value": "param"
         },
         {
           "type": "STRING",
@@ -1738,6 +1693,56 @@
         {
           "type": "SYMBOL",
           "name": "function_name"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "unwrap_left": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "unwrap_left"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ty"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "unwrap_right": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "unwrap_right"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ty"
         },
         {
           "type": "STRING",
