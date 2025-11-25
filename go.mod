@@ -1,4 +1,4 @@
-module github.com/distributed-lab/tree-sitter-simfony.git
+module github.com/distributed-lab/tree-sitter-simplicityhl.git
 
 go 1.22
 

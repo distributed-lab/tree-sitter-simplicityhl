@@ -1,12 +1,12 @@
 from unittest import TestCase
 
-import tree_sitter
-import tree_sitter_simfony
+from tree_sitter import Language, Parser
+import tree_sitter_simplicityhl
 
 
 class TestLanguage(TestCase):
     def test_can_load_grammar(self):
         try:
-            tree_sitter.Language(tree_sitter_simfony.language())
+            Parser(Language(tree_sitter_simplicityhl.language()))
         except Exception:
-            self.fail("Error loading Simfony grammar")
+            self.fail("Error loading SimplicityHL grammar")

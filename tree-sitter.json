@@ -6,9 +6,11 @@
       "camelcase": "SimplicityHL",
       "title": "SimplicityHL",
       "scope": "source.simplicityhl",
-      "file-types": [".simf"],
-      "injection-regex": "^simfony$",
-      "class-name": "TreeSitterSimfony"
+      "file-types": [
+        "simf"
+      ],
+      "injection-regex": "^simplicityhl$",
+      "class-name": "TreeSitterSimplicityhl"
     }
   ],
   "metadata": {
@@ -22,7 +24,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/distributed-lab/tree-sitter-simfony.git"
+      "repository": "https://github.com/distributed-lab/tree-sitter-simplicityhl.git"
     }
   },
   "bindings": {
