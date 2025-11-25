@@ -24,7 +24,7 @@ module.exports = grammar({
     function: ($) =>
       seq(
         "fn",
-        field("name", $.function_name),
+        field("definition", $.function_name),
         $.function_params,
         optional($.function_return),
         $.block_expression,
@@ -39,7 +39,7 @@ module.exports = grammar({
         ")",
       ),
 
-    typed_identifier: ($) => seq($.identifier, ":", $.ty),
+    typed_identifier: ($) => seq(field("definition", $.identifier), ":", $.ty),
 
     function_return: ($) => seq("->", $.ty),
 
@@ -57,7 +57,7 @@ module.exports = grammar({
         $.array_pattern,
         $.variable_pattern,
       ),
-    variable_pattern: ($) => $.identifier,
+    variable_pattern: ($) => field("definition", $.identifier),
     ignore_pattern: ($) => "_",
     tuple_pattern: ($) =>
       seq(
@@ -125,7 +125,7 @@ module.exports = grammar({
         $.fold,
         $.array_fold,
         $.for_while,
-        $.function_name,
+        field("reference", $.function_name),
       ),
 
     call_args: ($) =>
@@ -194,11 +194,11 @@ module.exports = grammar({
         "]",
       ),
 
-    type_alias: ($) => seq("type", $.alias_name, "=", $.ty, ";"),
+    type_alias: ($) => seq("type", field("definition", $.alias_name), "=", $.ty, ";"),
 
     ty: ($) =>
       choice(
-        $.alias_name,
+        field("reference", $.alias_name),
         $.builtin_alias,
         $.sum_type,
         $.option_type,
@@ -283,7 +283,7 @@ module.exports = grammar({
     unwrap_left: ($) => seq("unwrap_left", "::", "<", $.ty, ">"),
     unwrap_right: ($) => seq("unwrap_right", "::", "<", $.ty, ">"),
 
-    variable_expr: ($) => $.identifier,
+    variable_expr: ($) => field("reference", $.identifier),
 
     bin_literal: ($) => /0b[01_]+/,
     hex_literal: ($) => /0x[0-9a-fA-F_]+/,
