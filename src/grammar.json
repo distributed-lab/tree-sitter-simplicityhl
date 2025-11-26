@@ -1649,8 +1649,12 @@
           "value": "<"
         },
         {
-          "type": "SYMBOL",
-          "name": "function_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_name"
+          }
         },
         {
           "type": "STRING",
@@ -1682,8 +1686,12 @@
           "value": "<"
         },
         {
-          "type": "SYMBOL",
-          "name": "function_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_name"
+          }
         },
         {
           "type": "STRING",
@@ -1715,8 +1723,12 @@
           "value": "<"
         },
         {
-          "type": "SYMBOL",
-          "name": "function_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_name"
+          }
         },
         {
           "type": "STRING",

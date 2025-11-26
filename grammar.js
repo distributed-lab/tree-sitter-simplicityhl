@@ -278,9 +278,9 @@ module.exports = grammar({
     param_expr: ($) => seq("param", "::", $.witness_name),
 
     type_cast: ($) => seq("<", $.ty, ">", "::", "into"),
-    fold: ($) => seq("fold", "::", "<", $.function_name, ",", /\d+/, ">"),
-    array_fold: ($) => seq("array_fold", "::", "<", $.function_name, ",", /\d+/, ">"),
-    for_while: ($) => seq("for_while", "::", "<", $.function_name, ">"),
+    fold: ($) => seq("fold", "::", "<", field("reference", $.function_name), ",", /\d+/, ">"),
+    array_fold: ($) => seq("array_fold", "::", "<", field("reference", $.function_name), ",", /\d+/, ">"),
+    for_while: ($) => seq("for_while", "::", "<", field("reference", $.function_name), ">"),
 
 
     unwrap_left: ($) => seq("unwrap_left", "::", "<", $.ty, ">"),

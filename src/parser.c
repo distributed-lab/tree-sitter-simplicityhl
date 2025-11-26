@@ -24,7 +24,7 @@
 #define FIELD_COUNT 2
 #define MAX_ALIAS_SEQUENCE_LENGTH 7
 #define MAX_RESERVED_WORD_SET_SIZE 0
-#define PRODUCTION_ID_COUNT 4
+#define PRODUCTION_ID_COUNT 5
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
@@ -1138,6 +1138,7 @@ static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
   [1] = {.index = 0, .length = 1},
   [2] = {.index = 1, .length = 1},
   [3] = {.index = 2, .length = 1},
+  [4] = {.index = 3, .length = 1},
 };
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
@@ -1147,6 +1148,8 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
     {field_reference, 0},
   [2] =
     {field_definition, 0},
+  [3] =
+    {field_reference, 3},
 };
 
 static const TSSymbol ts_alias_sequences[PRODUCTION_ID_COUNT][MAX_ALIAS_SEQUENCE_LENGTH] = {
@@ -10936,7 +10939,7 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [708] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_type_cast, 5, 0, 0),
   [710] = {.entry = {.count = 1, .reusable = true}}, SHIFT(253),
   [712] = {.entry = {.count = 1, .reusable = true}}, SHIFT(254),
-  [714] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_for_while, 5, 0, 0),
+  [714] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_for_while, 5, 0, 4),
   [716] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_unwrap_left, 5, 0, 0),
   [718] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_unwrap_right, 5, 0, 0),
   [720] = {.entry = {.count = 1, .reusable = true}}, SHIFT(94),
@@ -10963,8 +10966,8 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [762] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_right_pattern, 4, 0, 0),
   [764] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_some_pattern, 4, 0, 0),
   [766] = {.entry = {.count = 1, .reusable = true}}, SHIFT(216),
-  [768] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_fold, 7, 0, 0),
-  [770] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_array_fold, 7, 0, 0),
+  [768] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_fold, 7, 0, 4),
+  [770] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_array_fold, 7, 0, 4),
   [772] = {.entry = {.count = 1, .reusable = true}}, SHIFT(156),
 };
 
