@@ -14,7 +14,7 @@
     }
   ],
   "metadata": {
-    "version": "0.1.2",
+    "version": "0.1.3",
     "license": "MIT",
     "description": "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.",
     "authors": [

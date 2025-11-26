@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-simplicityhl"
 description = "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode."
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Kyrylo Baibula <kyrylo.baybula@distributed-lab.com>", "Volodymyr Herashchenko <cholkegn@gmail.com>"]
 license = "MIT"
 readme = "README.md"
