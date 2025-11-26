@@ -8,6 +8,12 @@
     "name": "Kyrylo Baibula",
     "email": "kyrylo.baybula@distributed-lab.com"
   },
+  "contributors": [
+    {
+      "name": "Volodymyr Herashchenko",
+      "email": "cholkegn@gmail.com"
+    }
+  ],
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [

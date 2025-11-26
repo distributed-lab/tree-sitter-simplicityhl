@@ -1,6 +1,7 @@
 /**
  * @file Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.
  * @author Kyrylo Baibula <kyrylo.baybula@distributed-lab.com>
+ * @author Herashchenko Volodymyr <cholkegn@gmail.com>
  * @license MIT
  */
 
