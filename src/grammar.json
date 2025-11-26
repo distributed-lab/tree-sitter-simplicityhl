@@ -73,7 +73,7 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "definition",
           "content": {
             "type": "SYMBOL",
             "name": "function_name"
@@ -155,8 +155,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "definition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
@@ -286,8 +290,12 @@
       ]
     },
     "variable_pattern": {
-      "type": "SYMBOL",
-      "name": "identifier"
+      "type": "FIELD",
+      "name": "definition",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      }
     },
     "ignore_pattern": {
       "type": "STRING",
@@ -617,12 +625,12 @@
           "name": "jet"
         },
         {
-          "type": "STRING",
-          "value": "unwrap_left"
+          "type": "SYMBOL",
+          "name": "unwrap_left"
         },
         {
-          "type": "STRING",
-          "value": "unwrap_right"
+          "type": "SYMBOL",
+          "name": "unwrap_right"
         },
         {
           "type": "STRING",
@@ -661,8 +669,12 @@
           "name": "for_while"
         },
         {
-          "type": "SYMBOL",
-          "name": "function_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_name"
+          }
         }
       ]
     },
@@ -834,15 +846,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -863,15 +867,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -892,15 +888,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": ":"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ty"
+          "name": "typed_identifier"
         },
         {
           "type": "STRING",
@@ -1103,8 +1091,12 @@
           "value": "type"
         },
         {
-          "type": "SYMBOL",
-          "name": "alias_name"
+          "type": "FIELD",
+          "name": "definition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "alias_name"
+          }
         },
         {
           "type": "STRING",
@@ -1124,8 +1116,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "alias_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "alias_name"
+          }
         },
         {
           "type": "SYMBOL",
@@ -1138,10 +1134,6 @@
         {
           "type": "SYMBOL",
           "name": "option_type"
-        },
-        {
-          "type": "STRING",
-          "value": "bool"
         },
         {
           "type": "SYMBOL",
@@ -1158,12 +1150,20 @@
         {
           "type": "SYMBOL",
           "name": "list_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bool_type"
         }
       ]
     },
     "alias_name": {
       "type": "PATTERN",
       "value": "[a-zA-Z][a-zA-Z0-9_]*"
+    },
+    "bool_type": {
+      "type": "STRING",
+      "value": "bool"
     },
     "builtin_alias": {
       "type": "CHOICE",
@@ -1549,27 +1549,6 @@
         }
       ]
     },
-    "jet_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "jet"
-      }
-    },
-    "witness_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "witness"
-      }
-    },
-    "param_keyword": {
-      "type": "TOKEN",
-      "content": {
-        "type": "STRING",
-        "value": "param"
-      }
-    },
     "witness_name": {
       "type": "PATTERN",
       "value": "[a-zA-Z][a-zA-Z0-9_]*"
@@ -1582,8 +1561,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "jet_keyword"
+          "type": "STRING",
+          "value": "jet"
         },
         {
           "type": "STRING",
@@ -1599,8 +1578,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "witness_keyword"
+          "type": "STRING",
+          "value": "witness"
         },
         {
           "type": "STRING",
@@ -1616,8 +1595,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "param_keyword"
+          "type": "STRING",
+          "value": "param"
         },
         {
           "type": "STRING",
@@ -1745,9 +1724,63 @@
         }
       ]
     },
+    "unwrap_left": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "unwrap_left"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ty"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "unwrap_right": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "unwrap_right"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ty"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
     "variable_expr": {
-      "type": "SYMBOL",
-      "name": "identifier"
+      "type": "FIELD",
+      "name": "reference",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      }
     },
     "bin_literal": {
       "type": "PATTERN",

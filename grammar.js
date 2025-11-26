@@ -24,7 +24,7 @@ module.exports = grammar({
     function: ($) =>
       seq(
         "fn",
-        field("name", $.function_name),
+        field("definition", $.function_name),
         $.function_params,
         optional($.function_return),
         $.block_expression,
@@ -39,7 +39,7 @@ module.exports = grammar({
         ")",
       ),
 
-    typed_identifier: ($) => seq($.identifier, ":", $.ty),
+    typed_identifier: ($) => seq(field("definition", $.identifier), ":", $.ty),
 
     function_return: ($) => seq("->", $.ty),
 
@@ -57,7 +57,7 @@ module.exports = grammar({
         $.array_pattern,
         $.variable_pattern,
       ),
-    variable_pattern: ($) => $.identifier,
+    variable_pattern: ($) => field("definition", $.identifier),
     ignore_pattern: ($) => "_",
     tuple_pattern: ($) =>
       seq(
@@ -114,8 +114,8 @@ module.exports = grammar({
     call_name: ($) =>
       choice(
         $.jet,
-        "unwrap_left",
-        "unwrap_right",
+        $.unwrap_left,
+        $.unwrap_right,
         "is_none",
         "unwrap",
         "assert!",
@@ -125,7 +125,7 @@ module.exports = grammar({
         $.fold,
         $.array_fold,
         $.for_while,
-        $.function_name,
+        field("reference", $.function_name),
       ),
 
     call_args: ($) =>
@@ -158,9 +158,9 @@ module.exports = grammar({
         "true",
       ),
 
-    left_pattern: ($) => seq("Left", "(", $.identifier, ":", $.ty, ")"),
-    right_pattern: ($) => seq("Right", "(", $.identifier, ":", $.ty, ")"),
-    some_pattern: ($) => seq("Some", "(", $.identifier, ":", $.ty, ")"),
+    left_pattern: ($) => seq("Left", "(", $.typed_identifier, ")"),
+    right_pattern: ($) => seq("Right", "(", $.typed_identifier, ")"),
+    some_pattern: ($) => seq("Some", "(", $.typed_identifier, ")"),
 
     tuple_expr: ($) =>
       seq(
@@ -194,22 +194,24 @@ module.exports = grammar({
         "]",
       ),
 
-    type_alias: ($) => seq("type", $.alias_name, "=", $.ty, ";"),
+    type_alias: ($) => seq("type", field("definition", $.alias_name), "=", $.ty, ";"),
 
     ty: ($) =>
       choice(
-        $.alias_name,
+        field("reference", $.alias_name),
         $.builtin_alias,
         $.sum_type,
         $.option_type,
-        "bool",
         $.unsigned_type,
         $.tuple_type,
         $.array_type,
         $.list_type,
+        $.bool_type
       ),
 
     alias_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    bool_type: ($) => "bool",
 
     builtin_alias: ($) =>
       choice(
@@ -266,22 +268,24 @@ module.exports = grammar({
     module_assign: ($) =>
       seq("const", $.witness_name, ":", $.ty, "=", $.expression),
 
-    jet_keyword: ($) => token("jet"),
-    witness_keyword: ($) => token("witness"),
-    param_keyword: ($) => token("param"),
 
     witness_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
     identifier: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
 
-    jet: ($) => seq($.jet_keyword, "::", $.function_name),
-    witness_expr: ($) => seq($.witness_keyword, "::", $.witness_name),
-    param_expr: ($) => seq($.param_keyword, "::", $.witness_name),
+    jet: ($) => seq("jet", "::", $.function_name),
+    witness_expr: ($) => seq("witness", "::", $.witness_name),
+    param_expr: ($) => seq("param", "::", $.witness_name),
 
     type_cast: ($) => seq("<", $.ty, ">", "::", "into"),
     fold: ($) => seq("fold", "::", "<", $.function_name, ",", /\d+/, ">"),
     array_fold: ($) => seq("array_fold", "::", "<", $.function_name, ",", /\d+/, ">"),
     for_while: ($) => seq("for_while", "::", "<", $.function_name, ">"),
-    variable_expr: ($) => $.identifier,
+
+
+    unwrap_left: ($) => seq("unwrap_left", "::", "<", $.ty, ">"),
+    unwrap_right: ($) => seq("unwrap_right", "::", "<", $.ty, ">"),
+
+    variable_expr: ($) => field("reference", $.identifier),
 
     bin_literal: ($) => /0b[01_]+/,
     hex_literal: ($) => /0x[0-9a-fA-F_]+/,

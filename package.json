@@ -1,8 +1,8 @@
 {
-  "name": "tree-sitter-simfony",
-  "version": "0.1.1",
+  "name": "tree-sitter-simplicityhl",
+  "version": "0.1.2",
   "description": "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode.",
-  "repository": "https://github.com/distributed-lab/tree-sitter-simfony.git",
+  "repository": "https://github.com/distributed-lab/tree-sitter-simplicityhl.git",
   "license": "MIT",
   "author": {
     "name": "Kyrylo Baibula",
@@ -14,7 +14,7 @@
     "incremental",
     "parsing",
     "tree-sitter",
-    "simfony"
+    "simplicityhl"
   ],
   "files": [
     "grammar.js",
@@ -27,15 +27,16 @@
     "*.wasm"
   ],
   "dependencies": {
-    "node-addon-api": "^8.2.1",
-    "node-gyp-build": "^4.8.2"
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
     "prebuildify": "^6.0.1",
-    "tree-sitter-cli": "^0.25.3"
+    "tree-sitter": "^0.22.4",
+    "tree-sitter-cli": "^0.25.10"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.21.1"
+    "tree-sitter": "^0.22.4"
   },
   "peerDependenciesMeta": {
     "tree-sitter": {

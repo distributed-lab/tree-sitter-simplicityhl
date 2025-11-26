@@ -1,13 +1,13 @@
 [package]
-name = "tree-sitter-simfony"
+name = "tree-sitter-simplicityhl"
 description = "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode."
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Kyrylo Baibula <kyrylo.baybula@distributed-lab.com>"]
 license = "MIT"
 readme = "README.md"
-keywords = ["incremental", "parsing", "tree-sitter", "simfony"]
+keywords = ["incremental", "parsing", "tree-sitter", "simplicityhl"]
 categories = ["parser-implementations", "parsing", "text-editors"]
-repository = "https://github.com/distributed-lab/tree-sitter-simfony.git"
+repository = "https://github.com/distributed-lab/tree-sitter-simplicityhl.git"
 edition = "2021"
 autoexamples = false
 
@@ -18,7 +18,7 @@ include = [
   "queries/*",
   "src/*",
   "tree-sitter.json",
-  "LICENSE",
+  "/LICENSE",
 ]
 
 [lib]
@@ -31,4 +31,4 @@ tree-sitter-language = "0.1"
 cc = "1.2"
 
 [dev-dependencies]
-tree-sitter = "0.25.3"
+tree-sitter = "0.25.10"

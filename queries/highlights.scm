@@ -30,9 +30,11 @@
 ] @type
 
 ; Modules
-(jet_keyword) @module
-(witness_keyword) @module
-(param_keyword) @module
+[
+  "jet"
+  "witness"
+  "param"
+ ] @module
 
 ; Functions
 [
