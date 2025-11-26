@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-simplicityhl
 HOMEPAGE_URL := https://github.com/distributed-lab/tree-sitter-simplicityhl.git
-VERSION := 0.1.1
+VERSION := 0.1.2
 
 # repository
 SRC_DIR := src

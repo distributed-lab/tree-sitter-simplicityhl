@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-simplicityhl
-        VERSION "0.1.1"
+        VERSION "0.1.2"
         DESCRIPTION "Tree-sitter parse for Rust-like high-level language that compiles down to Simplicity bytecode."
         HOMEPAGE_URL "https://github.com/distributed-lab/tree-sitter-simplicityhl.git"
         LANGUAGES C)
