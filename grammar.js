@@ -206,9 +206,12 @@ module.exports = grammar({
         $.tuple_type,
         $.array_type,
         $.list_type,
+        $.bool_type
       ),
 
     alias_name: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+
+    bool_type: ($) => "bool",
 
     builtin_alias: ($) =>
       choice(
@@ -236,7 +239,6 @@ module.exports = grammar({
         "ExplicitNonce",
         "Nonce",
         "TokenAmount1",
-        "bool"
       ),
 
     sum_type: ($) => seq("Either", "<", $.ty, ",", $.ty, ">"),

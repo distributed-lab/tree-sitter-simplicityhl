@@ -73,7 +73,7 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "definition",
           "content": {
             "type": "SYMBOL",
             "name": "function_name"
@@ -155,8 +155,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "definition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
@@ -286,8 +290,12 @@
       ]
     },
     "variable_pattern": {
-      "type": "SYMBOL",
-      "name": "identifier"
+      "type": "FIELD",
+      "name": "definition",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      }
     },
     "ignore_pattern": {
       "type": "STRING",
@@ -661,8 +669,12 @@
           "name": "for_while"
         },
         {
-          "type": "SYMBOL",
-          "name": "function_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "function_name"
+          }
         }
       ]
     },
@@ -1079,8 +1091,12 @@
           "value": "type"
         },
         {
-          "type": "SYMBOL",
-          "name": "alias_name"
+          "type": "FIELD",
+          "name": "definition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "alias_name"
+          }
         },
         {
           "type": "STRING",
@@ -1100,8 +1116,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "alias_name"
+          "type": "FIELD",
+          "name": "reference",
+          "content": {
+            "type": "SYMBOL",
+            "name": "alias_name"
+          }
         },
         {
           "type": "SYMBOL",
@@ -1130,12 +1150,20 @@
         {
           "type": "SYMBOL",
           "name": "list_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "bool_type"
         }
       ]
     },
     "alias_name": {
       "type": "PATTERN",
       "value": "[a-zA-Z][a-zA-Z0-9_]*"
+    },
+    "bool_type": {
+      "type": "STRING",
+      "value": "bool"
     },
     "builtin_alias": {
       "type": "CHOICE",
@@ -1235,10 +1263,6 @@
         {
           "type": "STRING",
           "value": "TokenAmount1"
-        },
-        {
-          "type": "STRING",
-          "value": "bool"
         }
       ]
     },
@@ -1751,8 +1775,12 @@
       ]
     },
     "variable_expr": {
-      "type": "SYMBOL",
-      "name": "identifier"
+      "type": "FIELD",
+      "name": "reference",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      }
     },
     "bin_literal": {
       "type": "PATTERN",

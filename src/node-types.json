@@ -148,7 +148,18 @@
   {
     "type": "call_name",
     "named": true,
-    "fields": {},
+    "fields": {
+      "reference": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "function_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": false,
@@ -163,10 +174,6 @@
         },
         {
           "type": "for_while",
-          "named": true
-        },
-        {
-          "type": "function_name",
           "named": true
         },
         {
@@ -246,7 +253,7 @@
     "type": "function",
     "named": true,
     "fields": {
-      "name": {
+      "definition": {
         "multiple": false,
         "required": true,
         "types": [
@@ -825,17 +832,28 @@
   {
     "type": "ty",
     "named": true,
-    "fields": {},
+    "fields": {
+      "reference": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "alias_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "alias_name",
+          "type": "array_type",
           "named": true
         },
         {
-          "type": "array_type",
+          "type": "bool_type",
           "named": true
         },
         {
@@ -868,15 +886,22 @@
   {
     "type": "type_alias",
     "named": true,
-    "fields": {},
+    "fields": {
+      "definition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "alias_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "alias_name",
-          "named": true
-        },
         {
           "type": "ty",
           "named": true
@@ -902,15 +927,22 @@
   {
     "type": "typed_identifier",
     "named": true,
-    "fields": {},
+    "fields": {
+      "definition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "ty",
           "named": true
@@ -956,31 +988,33 @@
   {
     "type": "variable_expr",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "reference": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
     "type": "variable_pattern",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "definition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1192,8 +1226,8 @@
     "named": true
   },
   {
-    "type": "bool",
-    "named": false
+    "type": "bool_type",
+    "named": true
   },
   {
     "type": "comment",
