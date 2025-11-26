@@ -19,15 +19,16 @@
 (tuple_type) @type.builtin
 (array_type) @type.builtin
 (list_type) @type.builtin
+(bool_type) @type.builtin
+
 (alias_name) @type
 
 [
-  "bool"
   "None"
   "Some"
   "Left"
   "Right"
-] @type
+] @type.builtin
 
 ; Modules
 [
